@@ -1,10 +1,23 @@
+# Write your MySQL query statement below
+with cte as (
+    select
+        employee_id,
+        manager_id
+    from
+        Employees
+    where
+        salary < 30000
+)
 select
-    e.employee_id
+    employee_id
 from
-    Employees e
-    left join Employees m on m.employee_id = e.manager_id
+    cte
 where
-    e.salary < 30000
-    and m.employee_id is null
+    manager_id not in(
+        select
+            employee_id
+        from
+            employees
+    )
 order by
-    e.employee_id
+    employee_id
